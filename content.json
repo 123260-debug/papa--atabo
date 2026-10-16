@@ -1,0 +1,139 @@
+{
+  "links": {
+    "ch1": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86%E3%83%91%E3%83%91",
+    "ch2": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86-r5y"
+  },
+  "heroImage": "",
+  "stats": {
+    "subs": 30,
+    "videos": 5,
+    "views": 6159,
+    "asof": "2026-10-14"
+  },
+  "videos": [
+    {
+      "id": "7nsuiov40fk",
+      "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #1",
+      "titleEn": "[KOOV] Atabou (age 6) takes on programming #1",
+      "dur": "8:11",
+      "views": "2,154",
+      "sum": "ソニーの学習キット「KOOV」で、初めてのプログラミングとロボット制作に挑戦する第1回。基本のブロック組み立てと、KOOVの仕組みに触れます。",
+      "sumEn": "Using Sony's KOOV learning kit, Atabou takes on programming and robot building for the very first time. He starts with basic block assembly and how KOOV works."
+    },
+    {
+      "id": "ajZlPAaEfAs",
+      "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #2",
+      "titleEn": "[KOOV] Atabou (age 6) takes on programming #2",
+      "dur": "6:25",
+      "views": "1,654",
+      "sum": "KOOVでの制作とプログラミングを進める第2弾。ブロックの扱いに慣れながら、ロボットを動かすための試行錯誤を重ねます。",
+      "sumEn": "The second episode continues with building and programming. As he gets used to the blocks, he keeps trying and fixing things to make the robot move."
+    },
+    {
+      "id": "9QC8yALW0rk",
+      "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #3",
+      "titleEn": "[KOOV] Atabou (age 6) takes on programming #3",
+      "dur": "11:19",
+      "views": "1,717",
+      "sum": "プログラムを組んで思い通りにロボットを動かす、楽しさと難しさに向き合う第3弾。",
+      "sumEn": "Episode 3 is about the fun and the difficulty of writing a program and making the robot move just the way he wants."
+    },
+    {
+      "id": "1cfGZuY55E8",
+      "title": "【KOOV】あたぼう(7歳) プログラミングに挑戦 #4",
+      "titleEn": "[KOOV] Atabou (age 7) takes on programming #4",
+      "dur": "2:47",
+      "views": "296",
+      "sum": "7歳になってからの挑戦。より複雑な組み立てやプログラミングの課題に取り組みます。",
+      "sumEn": "Now seven years old, Atabou faces more complex block building and programming challenges."
+    },
+    {
+      "id": "wWIrOOHa0I0",
+      "title": "【KOOV】あたぼう プログラミングに挑戦 #5",
+      "titleEn": "[KOOV] Atabou takes on programming #5",
+      "dur": "4:33",
+      "views": "338",
+      "sum": "8歳。カメラ型ロボットの制作に挑戦。フォトリフレクターの数値を検証し、条件分岐でLEDを点灯・消灯させる仕組みを解説します。",
+      "sumEn": "At age 8, Atabou builds a camera-style robot. He tests the numbers from a photo reflector (infrared sensor) and uses a condition to turn an LED on and off."
+    }
+  ],
+  "cast": [
+    {
+      "name": "あたぼう",
+      "nameEn": "Atabou",
+      "tag": "ATABOU",
+      "ini": "A",
+      "photo": "@default1"
+    },
+    {
+      "name": "あたぼうパパ",
+      "nameEn": "Atabou Papa",
+      "tag": "ATABOU PAPA",
+      "ini": "P",
+      "photo": ""
+    },
+    {
+      "name": "ママちゃん丸",
+      "nameEn": "Mama Chanmaru",
+      "tag": "MAMA CHANMARU",
+      "ini": "M",
+      "photo": ""
+    }
+  ],
+  "channels": [
+    {
+      "key": "CHANNEL 01",
+      "name": "あたぼうパパ",
+      "nameEn": "Atabou Papa",
+      "handle": "youtube.com/@あたぼうパパ",
+      "url": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86%E3%83%91%E3%83%91",
+      "desc": "KOOVプログラミングに挑戦するシリーズなど、あたぼうの成長を記録しているメインチャンネル。2015年11月23日に開設しました。\n\n現在公開しているのは、ソニーの学習キット「KOOV」に挑戦する全5本のシリーズ。6歳の初挑戦(#1〜#3)から、7歳(#4)、8歳(#5)まで、ブロックの組み立てからプログラミング、センサーを使ったLED制御へと、少しずつステップアップしていきます。\n\nあたぼうがブロックを組み、プログラムを考え、試行錯誤を重ねる姿を記録しています。",
+      "descEn": "The main channel, recording Atabou's growth, including the KOOV programming series. It opened on November 23, 2015.\n\nThe channel currently has a series of five videos about Sony's KOOV learning kit. From his first try at age 6 (#1-#3) to age 7 (#4) and age 8 (#5), he steps up little by little, from block building to programming and LED control with a sensor.\n\nThe videos record Atabou building with blocks, thinking up programs, and trying again and again.",
+      "stats": "",
+      "statsEn": ""
+    },
+    {
+      "key": "CHANNEL 02",
+      "name": "あたぼうチャンネル",
+      "nameEn": "Atabou Channel",
+      "handle": "youtube.com/@あたぼう-r5y",
+      "url": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86-r5y",
+      "desc": "15歳になったあたぼうが立ち上げた新チャンネル。現在、公開中の動画はありません。\n\n8月頃に、約9分の横動画「キンクイに行ってみた」を公開。公開から約1ヶ月ほどで削除したものの、70回近い再生数を記録し、大きな反響を呼びました。この動画は、あたぼう自身が編集したものです。\n\nショート動画も1本公開しており、あたぼう自身がピアノで「となりのトトロ」の音源を演奏。450回以上再生され、コメントも寄せられて、こちらも大きな反響となりました。",
+      "descEn": "A new channel started by Atabou, now 15. There are no public videos at the moment.\n\nAround August, he posted a landscape video of about nine minutes, \"Kinkui ni Ittemita\". It was taken down after about a month, but it reached nearly 70 views and got a big response. Atabou edited the video himself.\n\nHe also posted one short video in which he plays the music of \"My Neighbor Totoro\" on the piano. It has been viewed more than 450 times and received comments, again getting a big response.",
+      "stats": "",
+      "statsEn": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "KOOV(クーブ)ってなに?",
+      "qEn": "What is KOOV?",
+      "a": "ソニーのプログラミング・ロボット学習キットです。ブロックで形を作り、プログラムで動かしながら学べます。",
+      "aEn": "It is Sony's programming and robot learning kit. You build shapes with blocks and learn by making them move with a program."
+    },
+    {
+      "q": "どの動画から観ればいい?",
+      "qEn": "Which video should I watch first?",
+      "a": "#1から順番がおすすめです。6歳の初挑戦から、8歳の#5まで、成長の流れを通して観られます。",
+      "aEn": "We recommend starting from #1. You can follow his growth from the first try at age 6 to #5 at age 8."
+    },
+    {
+      "q": "動画は全部で何本?",
+      "qEn": "How many videos are there?",
+      "a": "あたぼうパパチャンネルは、「KOOV プログラミングに挑戦」シリーズの#1〜#5、全5本です。",
+      "aEn": "The Atabou Papa channel has five videos in total: #1 to #5 of the \"KOOV Programming Challenge\" series."
+    },
+    {
+      "q": "「あたぼうチャンネル」ってなに?",
+      "qEn": "What is \"Atabou Channel\"?",
+      "a": "15歳になったあたぼうが立ち上げた新チャンネルです。くわしくは、CHANNELSをご覧ください。",
+      "aEn": "It is a new channel started by Atabou, now 15. See the Channels section for details."
+    },
+    {
+      "q": "新しい動画の通知を受け取るには?",
+      "qEn": "How can I get notified of new videos?",
+      "a": "YouTubeでチャンネル登録をして、ベルの通知をオンにしてください。ページ下の登録ボタンからどうぞ。",
+      "aEn": "Subscribe on YouTube and turn on the bell. You can use the subscribe button at the bottom of this page."
+    }
+  ]
+}
