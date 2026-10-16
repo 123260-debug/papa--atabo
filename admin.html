@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#000000">
+<title>管理ページ | あたぼうパパ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f4f4;--card:#fff;--fg:#111;--mu:#666;--ln:#dcdcdc;--a1:#ff3b30;--a2:#ff9f0a;--ok:#1f9d55;--ng:#d33;--en:'Inter',Arial,sans-serif;--jp:'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif;color-scheme:light;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--jp);line-height:1.85;font-size:15px;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+header{background:#000;color:#fff;padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(14px,4vw,36px) 0;position:sticky;top:0;z-index:20}
+.hr{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+header b{font-family:var(--en);letter-spacing:.3em;font-size:13px}
+.bd{display:flex;gap:8px;flex-wrap:wrap}.bd span{font-size:11px;padding:3px 12px;border-radius:99px;background:#333;color:#ddd}
+.bd .ok{background:var(--ok);color:#fff}.bd .wr{background:var(--a2);color:#000}
+.tabs{display:flex;gap:4px;margin-top:12px;overflow-x:auto;scrollbar-width:thin}
+.tabs button{flex:none;min-width:84px;background:#1c1c1c;color:#bbb;border:0;padding:11px 12px;font:700 13px var(--jp);cursor:pointer;border-radius:8px 8px 0 0;white-space:nowrap}
+.tabs button.on{background:var(--bg);color:#000}
+main{max-width:900px;margin:0 auto;padding:26px clamp(14px,4vw,36px)}
+.pg{display:none}.pg.on{display:block}
+h2{font-size:20px;margin:6px 0 6px}h3{font-size:16px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:20px;margin-bottom:16px}
+.card p,.card li{color:#333}.mu{color:var(--mu);font-size:13px}
+.step{display:grid;grid-template-columns:38px 1fr;gap:14px}
+.step>b{width:38px;height:38px;border-radius:50%;background:linear-gradient(120deg,var(--a1),var(--a2));color:#fff;display:grid;place-items:center;font-family:var(--en)}
+.step ol,.step ul,.card ul{padding-left:20px;margin:8px 0}.step li,.card li{margin:4px 0}
+code{background:#eee;padding:1px 7px;border-radius:5px;font-size:13px;word-break:break-all}
+.note{background:#fff7e6;border:1px solid #ffd591;border-radius:10px;padding:12px 14px;font-size:13px;margin-top:10px}
+label{display:block;font-size:12px;color:var(--mu);margin:14px 0 4px;font-weight:700}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--ln);background:#fff;color:var(--fg);font:inherit;border-radius:10px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--a2);border-color:transparent}
+textarea{min-height:110px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button.b{font:700 14px var(--jp);padding:12px 22px;border:0;border-radius:99px;background:linear-gradient(120deg,var(--a1),var(--a2));color:#fff;cursor:pointer;margin:14px 8px 0 0}
+button.b.o{background:#fff;color:#111;border:1px solid #bbb}button.b.s{padding:7px 14px;font-size:12px;margin:0 0 0 6px}
+button.b:disabled{opacity:.5}
+.row{display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid var(--ln)}
+.row:first-child{border-top:0}.row small{font-family:var(--en);color:var(--mu)}
+.tg{display:inline-block;font-family:var(--en);font-size:10px;border:1px solid #999;padding:0 8px;margin-right:8px;border-radius:4px;letter-spacing:.1em}
+.pv{border:1px dashed #bbb;border-radius:10px;padding:14px;margin-top:14px;background:#fafafa}
+.pv .d{font-family:var(--en);font-size:13px;margin-right:12px}.pv p{margin-top:8px;color:var(--mu);white-space:pre-wrap}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--ln);padding:10px clamp(14px,4vw,36px) calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:space-between;z-index:20}
+.bar .b{margin:0}#msg{font-size:13px;color:var(--mu);flex:1}#msg.ok{color:var(--ok)}#msg.ng{color:var(--ng)}
+details{margin:8px 0;border:1px solid var(--ln);border-radius:10px;padding:0 14px;background:#fff}summary{cursor:pointer;padding:12px 0;font-weight:700}details p{padding-bottom:12px}
+.bx2{border:1px solid var(--ln);border-radius:10px;padding:12px;margin:10px 0;background:#fafafa}.bx2 textarea{min-height:90px}
+.ih{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}.ih b{font-size:14px}
+.ih .b.s{margin:0 0 0 6px}
+.th{max-width:200px;border-radius:8px;display:block;margin:8px 0}
+@media(max-width:600px){.g2{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:4px}.row>div:last-child{display:flex;margin-top:6px}.bar{flex-wrap:wrap}.step{grid-template-columns:30px 1fr;gap:10px}.step>b{width:30px;height:30px;font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hr"><b>ATABOU PAPA ADMIN</b><div class="bd"><span id="b1">未接続</span><span id="b2" class="wr" style="display:none">未公開の変更あり</span></div></div>
+  <div class="tabs" id="tabs">
+    <button data-t="guide" class="on">① 使い方</button><button data-t="set">② 接続設定</button><button data-t="news">③ 記事</button><button data-t="videos">④ 動画</button><button data-t="stats">⑤ 数字</button><button data-t="bio">⑥ BIO</button><button data-t="cast">⑦ キャスト</button><button data-t="channels">⑧ チャンネル</button><button data-t="faq">⑨ FAQ</button><button data-t="texts">⑩ 文言</button><button data-t="site">⑪ 全体</button>
+  </div>
+</header>
+<main id="main">
+
+<div class="pg on" id="p-guide">
+  <h2>はじめての方へ</h2>
+  <p class="mu" style="margin-bottom:14px">この管理ページで、サイトの中身をすべて書き換えられます。最初に「接続」だけ済ませれば、あとは各タブで編集して、画面の下の「公開する」を押すだけです。</p>
+
+  <div class="card step"><b>1</b><div><h3>鍵(アクセストークン)を作る</h3>
+    <ol><li><code>github.com/settings/personal-access-tokens/new</code> を開きます</li>
+    <li>「Token name」に <code>admin</code>、「Expiration」は「90 days」を選びます</li>
+    <li>「Repository access」は「Only select repositories」にして、サイトのリポジトリだけを選びます</li>
+    <li>「Permissions」→「Repository permissions」→「Contents」を「Read and write」にします</li>
+    <li>一番下の「Generate token」を押して、<code>github_pat_…</code> をすべてコピーします(この画面を閉じると二度と見られません)</li></ol>
+    <div class="note">鍵は他の人に見せないでください。期限が切れたら、同じ手順で作り直せば大丈夫です。</div></div></div>
+
+  <div class="card step"><b>2</b><div><h3>この管理ページに接続する</h3>
+    <ol><li>上の「② 接続設定」を開き、GitHubのユーザー名、リポジトリ名、鍵を入れます</li>
+    <li>「接続テスト」を押して、上のバッジが緑の「接続OK」になれば成功です</li></ol></div></div>
+
+  <div class="card step"><b>3</b><div><h3>編集して、公開する</h3>
+    <ol><li>下の表のタブで、書き換えたい場所を開きます</li>
+    <li>文章や写真を直します(英語の欄は、空でもかまいません。空のときは、英語表示でも日本語が出ます)</li>
+    <li>画面の一番下の「公開する」を押します。1〜3分で、サイトに反映されます</li></ol>
+    <div class="note">「公開する」は、いま開いているタブの内容だけを公開します。タブを変えるときは、先に「公開する」を押してください。</div></div></div>
+
+  <h2 style="margin-top:26px">どのタブで何を直せる?</h2>
+  <div class="card"><ul>
+    <li><b>③ 記事</b> … お知らせ(ニュース)の追加・編集・削除。写真と英語も付けられます</li>
+    <li><b>④ 動画</b> … 動画の追加・削除・並べ替え、タイトル、再生時間、再生回数、あらすじ、サムネイル。動画IDを入れるだけで新しい動画も足せます</li>
+    <li><b>⑤ 数字</b> … 登録者数・動画数・総再生数と、数字の日付(手入力です)</li>
+    <li><b>⑥ BIO</b> … プロフィールの文章と年表</li>
+    <li><b>⑦ キャスト</b> … 名前と写真</li>
+    <li><b>⑧ チャンネル</b> … 2つのチャンネルの名前・説明・リンク。チャンネルの追加もできます</li>
+    <li><b>⑨ FAQ</b> … よくある質問の追加・編集・削除・並べ替え</li>
+    <li><b>⑩ 文言</b> … 上のどこにも入らない、サイト内のすべての文字(メニュー、見出し、ボタン、フッターなど)</li>
+    <li><b>⑪ 全体</b> … トップの大きな写真、YouTubeへのリンク</li></ul></div>
+
+  <h2 style="margin-top:26px">YouTubeの数字は自動で変わりますか?</h2>
+  <div class="card"><p>自動では変わりません。YouTubeの数字を自動で取るには、APIキーという仕組みが必要で、使わない方針にしました。代わりに、「⑤ 数字」で、登録者数などを書き換えます。30秒で終わります。</p></div>
+
+  <h2 style="margin-top:26px">困ったとき</h2>
+  <details><summary>「HTTP 401」と出る</summary><p>鍵が間違っているか、期限切れです。手順1で新しい鍵を作って、貼り付け直してください。</p></details>
+  <details><summary>「HTTP 403」「HTTP 404」と出る</summary><p>鍵の権限が足りないか、リポジトリが選ばれていません。手順1の「Repository access」と「Contents: Read and write」を確認してください。ユーザー名・リポジトリ名のつづり違いもよくある原因です。</p></details>
+  <details><summary>公開したのにサイトが変わらない</summary><p>反映まで1〜3分かかります。時間をおいて、ブラウザを再読み込み(スマホは更新)してください。</p></details>
+  <details><summary>「公開できませんでした: … does not match」と出る</summary><p>他の場所でも更新した場合に起きます。「② 接続設定」で「接続テスト」を押して、最新の内容を読み込み直してから、もう一度直して公開してください。</p></details>
+  <details><summary>写真が入らない</summary><p>先に接続テストを成功させてください。写真は自動で小さく整えられ、GitHubの images フォルダに保存されます。</p></details>
+  <details><summary>直したのに元に戻ってしまう</summary><p>「公開する」を押さずにページを閉じた可能性があります。変更があるとき、上に黄色の「未公開の変更あり」が出ます。</p></details>
+  <details><summary>鍵はどこに保存される?</summary><p>このブラウザの中だけです。共用のパソコンでは、使い終わったら「② 接続設定」の「設定を消去」を押してください。</p></details>
+</div>
+
+<div class="pg" id="p-set">
+  <h2>GitHubとの接続</h2>
+  <div class="card">
+    <div class="g2"><div><label>GitHubのユーザー名</label><input id="u" autocomplete="off" placeholder="例: your-name"></div>
+    <div><label>リポジトリ名</label><input id="r" autocomplete="off" placeholder="例: atabou-papa"></div>
+    <div><label>ブランチ(ふつうは main)</label><input id="b" value="main"></div>
+    <div><label>お知らせのファイル名</label><input id="p" value="news.json"></div></div>
+    <label>鍵(アクセストークン)</label><input id="t" type="password" autocomplete="off" placeholder="github_pat_...">
+    <button class="b" id="test">接続テスト</button><button class="b o" id="clr">設定を消去</button>
+    <p class="mu" style="margin-top:12px">入れた内容は、このブラウザの中にだけ保存されます。</p>
+  </div>
+</div>
+
+<div class="pg" id="p-news">
+  <h2>記事を書く(お知らせ)</h2>
+  <div class="card">
+    <div class="g2"><div><label>日付</label><input id="d" type="date"></div>
+    <div><label>種類</label><select id="g"><option>NEWS</option><option>INFO</option><option>VIDEO</option><option>MEDIA</option></select></div></div>
+    <label>タイトル(日本語)</label><input id="ti" placeholder="例: 新しい動画を公開しました">
+    <label>タイトル(英語・なくてもOK)</label><input id="te">
+    <label>本文(日本語)— 空行を入れると段落が分かれます</label><textarea id="bo"></textarea>
+    <label>本文(英語・なくてもOK)</label><textarea id="bo2"></textarea>
+    <label>写真(1枚・なくてもOK)</label><input id="im" type="file" accept="image/*"><div id="ipv"></div>
+    <div class="pv" id="pv"></div>
+    <button class="b" id="add">追加する</button><button class="b o" id="cancel" style="display:none">編集をやめる</button>
+    <p class="mu" style="margin-top:10px">「追加する」のあと、画面の下の「公開する」を押すと、サイトに出ます。</p>
+  </div>
+  <h2 style="margin-top:24px">記事の一覧</h2>
+  <div class="card" id="list"></div>
+</div>
+
+<div class="pg" id="p-videos"><h2>動画</h2><p class="mu" style="margin-bottom:10px">新しい動画は、「動画を追加」を押して、YouTubeの動画IDを入れるだけで足せます(サムネイルはYouTubeの画像を自動で使います)。</p><div id="l-videos"></div><button class="b o" data-add="videos">+ 動画を追加</button></div>
+
+<div class="pg" id="p-stats"><h2>数字(登録者数など)</h2><p class="mu" style="margin-bottom:10px">YouTubeの画面で見える数字を、そのまま入れてください。サイトの「DATA」と「SUBSCRIBE」に出ます。</p>
+  <div class="card"><div class="g2"><div><label>登録者数</label><input type="number" data-stat="subs" inputmode="numeric"></div><div><label>動画の本数</label><input type="number" data-stat="videos" inputmode="numeric"></div><div><label>総再生回数</label><input type="number" data-stat="views" inputmode="numeric"></div><div><label>この数字の日付</label><input type="date" data-stat="asof"></div></div><button class="b o" id="stat-today">日付を今日にする</button></div></div>
+
+<div class="pg" id="p-bio">
+  <h2>プロフィール(BIO)</h2>
+  <div class="card"><h3>紹介文</h3><p class="mu">1つの欄が、1つの段落になります。</p><div id="bi-list"></div><button class="b o" id="bi-add">段落を足す</button></div>
+  <div class="card"><h3>年表(これまで)</h3><p class="mu">「見出し」には、年や年齢(例: 2015.11.23 / AGE 6)を入れます。</p><div id="tl-list"></div><button class="b o" id="tl-add">行を足す</button></div>
+</div>
+
+<div class="pg" id="p-cast"><h2>キャスト</h2><div id="l-cast"></div><button class="b o" data-add="cast">+ 人を追加</button></div>
+<div class="pg" id="p-channels"><h2>チャンネル</h2><p class="mu" style="margin-bottom:10px">説明は、空行を入れると段落が分かれます。</p><div id="l-channels"></div><button class="b o" data-add="channels">+ チャンネルを追加</button></div>
+<div class="pg" id="p-faq"><h2>FAQ(よくある質問)</h2><div id="l-faq"></div><button class="b o" data-add="faq">+ 質問を追加</button></div>
+
+<div class="pg" id="p-texts"><h2>文言(サイト内のすべての文字)</h2>
+  <p class="mu" style="margin-bottom:10px">ここには、メニュー・見出し・ボタン・フッターなど、他のタブにない文字がすべて並びます。日本語と英語を、それぞれ書き換えられます。同じ文字は、サイト内のすべての場所で、まとめて変わります。</p>
+  <input id="tq" placeholder="文字を探す(例: メニュー、Subscribe)" style="margin-bottom:10px">
+  <div id="tx-list"><p class="mu">読み込み中…(サイトを公開してから使えます)</p></div></div>
+
+<div class="pg" id="p-site"><h2>全体の設定</h2>
+  <div class="card"><h3>トップの大きな写真</h3><p class="mu">変えないときは、空のままで大丈夫です(今の写真が使われます)。</p><div id="hero-pv"></div><input type="file" id="hero-f" accept="image/*"><button class="b o s" id="hero-rm" style="margin:10px 0 0">写真を外す</button></div>
+  <div class="card"><h3>YouTubeのリンク</h3><label>あたぼうパパ チャンネルのURL</label><input data-lnk="ch1"><label>あたぼうチャンネルのURL</label><input data-lnk="ch2"></div>
+</div>
+
+</main>
+<div class="bar"><span id="msg">「① 使い方」から順に進めてください</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b o" id="site">サイトを開く</button><button class="b o" id="dl">news.jsonを保存</button><button class="b" id="pub">公開する</button></div></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var CDEF={"links": {"ch1": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86%E3%83%91%E3%83%91", "ch2": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86-r5y"}, "heroImage": "", "stats": {"subs": 30, "videos": 5, "views": 6159, "asof": "2026-10-14"}, "videos": [{"id": "7nsuiov40fk", "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #1", "titleEn": "[KOOV] Atabou (age 6) takes on programming #1", "dur": "8:11", "views": "2,154", "sum": "ソニーの学習キット「KOOV」で、初めてのプログラミングとロボット制作に挑戦する第1回。基本のブロック組み立てと、KOOVの仕組みに触れます。", "sumEn": "Using Sony's KOOV learning kit, Atabou takes on programming and robot building for the very first time. He starts with basic block assembly and how KOOV works."}, {"id": "ajZlPAaEfAs", "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #2", "titleEn": "[KOOV] Atabou (age 6) takes on programming #2", "dur": "6:25", "views": "1,654", "sum": "KOOVでの制作とプログラミングを進める第2弾。ブロックの扱いに慣れながら、ロボットを動かすための試行錯誤を重ねます。", "sumEn": "The second episode continues with building and programming. As he gets used to the blocks, he keeps trying and fixing things to make the robot move."}, {"id": "9QC8yALW0rk", "title": "【KOOV】あたぼう(6歳) プログラミングに挑戦 #3", "titleEn": "[KOOV] Atabou (age 6) takes on programming #3", "dur": "11:19", "views": "1,717", "sum": "プログラムを組んで思い通りにロボットを動かす、楽しさと難しさに向き合う第3弾。", "sumEn": "Episode 3 is about the fun and the difficulty of writing a program and making the robot move just the way he wants."}, {"id": "1cfGZuY55E8", "title": "【KOOV】あたぼう(7歳) プログラミングに挑戦 #4", "titleEn": "[KOOV] Atabou (age 7) takes on programming #4", "dur": "2:47", "views": "296", "sum": "7歳になってからの挑戦。より複雑な組み立てやプログラミングの課題に取り組みます。", "sumEn": "Now seven years old, Atabou faces more complex block building and programming challenges."}, {"id": "wWIrOOHa0I0", "title": "【KOOV】あたぼう プログラミングに挑戦 #5", "titleEn": "[KOOV] Atabou takes on programming #5", "dur": "4:33", "views": "338", "sum": "8歳。カメラ型ロボットの制作に挑戦。フォトリフレクターの数値を検証し、条件分岐でLEDを点灯・消灯させる仕組みを解説します。", "sumEn": "At age 8, Atabou builds a camera-style robot. He tests the numbers from a photo reflector (infrared sensor) and uses a condition to turn an LED on and off."}], "cast": [{"name": "あたぼう", "nameEn": "Atabou", "tag": "ATABOU", "ini": "A", "photo": "@default1"}, {"name": "あたぼうパパ", "nameEn": "Atabou Papa", "tag": "ATABOU PAPA", "ini": "P", "photo": ""}, {"name": "ママちゃん丸", "nameEn": "Mama Chanmaru", "tag": "MAMA CHANMARU", "ini": "M", "photo": ""}], "channels": [{"key": "CHANNEL 01", "name": "あたぼうパパ", "nameEn": "Atabou Papa", "handle": "youtube.com/@あたぼうパパ", "url": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86%E3%83%91%E3%83%91", "desc": "KOOVプログラミングに挑戦するシリーズなど、あたぼうの成長を記録しているメインチャンネル。2015年11月23日に開設しました。\n\n現在公開しているのは、ソニーの学習キット「KOOV」に挑戦する全5本のシリーズ。6歳の初挑戦(#1〜#3)から、7歳(#4)、8歳(#5)まで、ブロックの組み立てからプログラミング、センサーを使ったLED制御へと、少しずつステップアップしていきます。\n\nあたぼうがブロックを組み、プログラムを考え、試行錯誤を重ねる姿を記録しています。", "descEn": "The main channel, recording Atabou's growth, including the KOOV programming series. It opened on November 23, 2015.\n\nThe channel currently has a series of five videos about Sony's KOOV learning kit. From his first try at age 6 (#1-#3) to age 7 (#4) and age 8 (#5), he steps up little by little, from block building to programming and LED control with a sensor.\n\nThe videos record Atabou building with blocks, thinking up programs, and trying again and again.", "stats": "", "statsEn": ""}, {"key": "CHANNEL 02", "name": "あたぼうチャンネル", "nameEn": "Atabou Channel", "handle": "youtube.com/@あたぼう-r5y", "url": "https://www.youtube.com/@%E3%81%82%E3%81%9F%E3%81%BC%E3%81%86-r5y", "desc": "15歳になったあたぼうが立ち上げた新チャンネル。現在、公開中の動画はありません。\n\n8月頃に、約9分の横動画「キンクイに行ってみた」を公開。公開から約1ヶ月ほどで削除したものの、70回近い再生数を記録し、大きな反響を呼びました。この動画は、あたぼう自身が編集したものです。\n\nショート動画も1本公開しており、あたぼう自身がピアノで「となりのトトロ」の音源を演奏。450回以上再生され、コメントも寄せられて、こちらも大きな反響となりました。", "descEn": "A new channel started by Atabou, now 15. There are no public videos at the moment.\n\nAround August, he posted a landscape video of about nine minutes, \"Kinkui ni Ittemita\". It was taken down after about a month, but it reached nearly 70 views and got a big response. Atabou edited the video himself.\n\nHe also posted one short video in which he plays the music of \"My Neighbor Totoro\" on the piano. It has been viewed more than 450 times and received comments, again getting a big response.", "stats": "", "statsEn": ""}], "faq": [{"q": "KOOV(クーブ)ってなに?", "qEn": "What is KOOV?", "a": "ソニーのプログラミング・ロボット学習キットです。ブロックで形を作り、プログラムで動かしながら学べます。", "aEn": "It is Sony's programming and robot learning kit. You build shapes with blocks and learn by making them move with a program."}, {"q": "どの動画から観ればいい?", "qEn": "Which video should I watch first?", "a": "#1から順番がおすすめです。6歳の初挑戦から、8歳の#5まで、成長の流れを通して観られます。", "aEn": "We recommend starting from #1. You can follow his growth from the first try at age 6 to #5 at age 8."}, {"q": "動画は全部で何本?", "qEn": "How many videos are there?", "a": "あたぼうパパチャンネルは、「KOOV プログラミングに挑戦」シリーズの#1〜#5、全5本です。", "aEn": "The Atabou Papa channel has five videos in total: #1 to #5 of the \"KOOV Programming Challenge\" series."}, {"q": "「あたぼうチャンネル」ってなに?", "qEn": "What is \"Atabou Channel\"?", "a": "15歳になったあたぼうが立ち上げた新チャンネルです。くわしくは、CHANNELSをご覧ください。", "aEn": "It is a new channel started by Atabou, now 15. See the Channels section for details."}, {"q": "新しい動画の通知を受け取るには?", "qEn": "How can I get notified of new videos?", "a": "YouTubeでチャンネル登録をして、ベルの通知をオンにしてください。ページ下の登録ボタンからどうぞ。", "aEn": "Subscribe on YouTube and turn on the bell. You can use the subscribe button at the bottom of this page."}]};
+var EN0={
+'お知らせ':'Updates','動画':'Videos','これまで':'Our story','チャンネルデータ':'Channel data','キャスト':'Cast','チャンネル':'Channels','よくある質問':'FAQ','チャンネル登録':'Subscribe',
+'YouTubeチャンネル「あたぼうパパ」公式サイト。新しい動画をいち早くチェック。':'Official site of the YouTube channel "Atabou Papa". Be the first to catch new videos.',
+'動画を観る':'Watch videos','KOOV プログラミングに挑戦':'KOOV Programming Challenge','あたぼうパパ チャンネルデータ':'Atabou Papa channel data',
+'ソニーのプログラミング・ロボット学習キット「KOOV」を使って、あたぼうがプログラミングとロボット制作に挑戦するシリーズ。6歳で初めてブロックに触れた第1回から、8歳の第5回まで、その歩みを1本ずつ記録しています。':'A series in which Atabou takes on programming and robot building with Sony\'s KOOV learning kit. From the first episode at age 6, when he touched the blocks for the first time, to the fifth at age 8, each video records his steps.',
+'ブロックで形を作り、プログラムでロボットを動かし、センサーと条件分岐でLEDを制御する。回を追うごとに、挑戦の内容が少しずつ本格的になっていきます。':'He builds with blocks, moves the robot with a program, and controls an LED with a sensor and a condition. With each episode, the challenge becomes a little more serious.',
+'チャンネル開設(あたぼう5歳)':'Channel opened (Atabou, age 5)','#1〜#3 KOOVに初挑戦。組み立てから、プログラムで動かすところまで':'#1-#3 First time with KOOV. From building to making it move with a program','#4 より複雑な組み立てとプログラミングの課題へ':'#4 More complex building and programming challenges','#5 AGE 8。フォトリフレクターの数値を検証し、LEDを制御する':'#5 Age 8. Testing photo reflector values and controlling an LED','新チャンネル「あたぼうチャンネル」を立ち上げ':'Started the new channel "Atabou Channel"',
+'2026年10月14日時点の数値です。':'Figures as of October 14, 2026.','LIVE — YouTubeと自動連動中':'LIVE - synced with YouTube',
+'あたぼうチャンネル':'Atabou Channel',
+'KOOVプログラミングに挑戦するシリーズなど、あたぼうの成長を記録しているメインチャンネル。2015年11月23日に開設しました。':'The main channel, recording Atabou\'s growth, including the KOOV programming series. It opened on November 23, 2015.',
+'現在公開しているのは、ソニーの学習キット「KOOV」に挑戦する全5本のシリーズ。6歳の初挑戦(#1〜#3)から、7歳(#4)、8歳(#5)まで、ブロックの組み立てからプログラミング、センサーを使ったLED制御へと、少しずつステップアップしていきます。':'The channel currently has a series of five videos about Sony\'s KOOV learning kit. From his first try at age 6 (#1-#3) to age 7 (#4) and age 8 (#5), he steps up little by little, from block building to programming and LED control with a sensor.',
+'あたぼうがブロックを組み、プログラムを考え、試行錯誤を重ねる姿を記録しています。':'The videos record Atabou building with blocks, thinking up programs, and trying again and again.',
+'15歳になったあたぼうが立ち上げた新チャンネル。現在、公開中の動画はありません。':'A new channel started by Atabou, now 15. There are no public videos at the moment.',
+'8月頃に、約9分の横動画「キンクイに行ってみた」を公開。公開から約1ヶ月ほどで削除したものの、70回近い再生数を記録し、大きな反響を呼びました。この動画は、あたぼう自身が編集したものです。':'Around August, he posted a landscape video of about nine minutes, "Kinkui ni Ittemita". It was taken down after about a month, but it reached nearly 70 views and got a big response. Atabou edited the video himself.',
+'ショート動画も1本公開しており、あたぼう自身がピアノで「となりのトトロ」の音源を演奏。450回以上再生され、コメントも寄せられて、こちらも大きな反響となりました。':'He also posted one short video in which he plays the music of "My Neighbor Totoro" on the piano. It has been viewed more than 450 times and received comments, again getting a big response.',
+'KOOV(クーブ)ってなに?':'What is KOOV?','ソニーのプログラミング・ロボット学習キットです。ブロックで形を作り、プログラムで動かしながら学べます。':'It is Sony\'s programming and robot learning kit. You build shapes with blocks and learn by making them move with a program.',
+'どの動画から観ればいい?':'Which video should I watch first?','#1から順番がおすすめです。6歳の初挑戦から、8歳の#5まで、成長の流れを通して観られます。':'We recommend starting from #1. You can follow his growth from the first try at age 6 to #5 at age 8.',
+'動画は全部で何本?':'How many videos are there?','あたぼうパパチャンネルは、「KOOV プログラミングに挑戦」シリーズの#1〜#5、全5本です。':'The Atabou Papa channel has five videos in total: #1 to #5 of the "KOOV Programming Challenge" series.',
+'「あたぼうチャンネル」ってなに?':'What is "Atabou Channel"?','15歳になったあたぼうが立ち上げた新チャンネルです。くわしくは、CHANNELSをご覧ください。':'It is a new channel started by Atabou, now 15. See the Channels section for details.',
+'新しい動画の通知を受け取るには?':'How can I get notified of new videos?','YouTubeでチャンネル登録をして、ベルの通知をオンにしてください。ページ下の登録ボタンからどうぞ。':'Subscribe on YouTube and turn on the bell. You can use the subscribe button at the bottom of this page.',
+'チャンネル登録者数':'Subscribers','▶ チャンネル登録する':'▶ Subscribe now',
+'2015年11月23日 チャンネル開設 ・ 動画':'Since Nov 23, 2015 ・ ','本 ・ 総再生':' videos ・','回':' views',
+'あたぼうチャンネル ↗':'Atabou Channel ↗','© 2026 あたぼうパパ':'© 2026 Atabou Papa'
+};
+var BIODEF={intro:[
+{ja:'ソニーのプログラミング・ロボット学習キット「KOOV」を使って、あたぼうがプログラミングとロボット制作に挑戦するシリーズ。6歳で初めてブロックに触れた第1回から、8歳の第5回まで、その歩みを1本ずつ記録しています。',en:'A series in which Atabou takes on programming and robot building with Sony\'s KOOV learning kit. From the first episode at age 6, when he touched the blocks for the first time, to the fifth at age 8, each video records his steps.'},
+{ja:'ブロックで形を作り、プログラムでロボットを動かし、センサーと条件分岐でLEDを制御する。回を追うごとに、挑戦の内容が少しずつ本格的になっていきます。',en:'He builds with blocks, moves the robot with a program, and controls an LED with a sensor and a condition. With each episode, the challenge becomes a little more serious.'}],
+timeline:[
+{label:'2015.11.23',ja:'チャンネル開設(あたぼう5歳)',en:'Channel opened (Atabou, age 5)'},
+{label:'AGE 6',ja:'#1〜#3 KOOVに初挑戦。組み立てから、プログラムで動かすところまで',en:'#1-#3 First time with KOOV. From building to making it move with a program'},
+{label:'AGE 7',ja:'#4 より複雑な組み立てとプログラミングの課題へ',en:'#4 More complex building and programming challenges'},
+{label:'2019.10.22',ja:'#5 AGE 8。フォトリフレクターの数値を検証し、LEDを制御する',en:'#5 Age 8. Testing photo reflector values and controlling an LED'},
+{label:'AGE 15',ja:'新チャンネル「あたぼうチャンネル」を立ち上げ',en:'Started the new channel "Atabou Channel"'}]};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+var S={items:[],sha:null,edit:-1,ok:false,dirty:{},content:clone(CDEF),conSha:null,bio:clone(BIODEF),bioSha:null,texts:{},txtSha:null,tlist:null},CUR='guide',IMG='';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function say(m,c){var e=$('#msg');e.textContent=m;e.className=c||''}
+function anyDirty(){return Object.keys(S.dirty).some(function(k){return S.dirty[k]})}
+function badge(){var b=$('#b1');b.textContent=S.ok?'接続OK':'未接続';b.className=S.ok?'ok':'';$('#b2').style.display=anyDirty()?'inline':'none'}
+function mark(k,v){S.dirty[k]=v;badge()}
+function lsGet(){try{return JSON.parse(localStorage.getItem('ap_admin')||'{}')}catch(e){return{}}}
+function lsSet(o){try{localStorage.setItem('ap_admin',JSON.stringify(o))}catch(e){}}
+var c0=lsGet();['u','r','b','p','t'].forEach(function(k){if(c0[k])$('#'+k).value=c0[k]});
+function cfg(){return{u:$('#u').value.trim(),r:$('#r').value.trim(),b:$('#b').value.trim()||'main',p:$('#p').value.trim()||'news.json',t:$('#t').value.trim()}}
+function need(c){if(!c.u||!c.r||!c.t){go('set');say('ユーザー名・リポジトリ名・鍵を入れてください','ng');return false}return true}
+function api(c,p){return'https://api.github.com/repos/'+encodeURIComponent(c.u)+'/'+encodeURIComponent(c.r)+'/contents/'+p.split('/').map(encodeURIComponent).join('/')}
+function hd(c){return{'Authorization':'Bearer '+c.t,'Accept':'application/vnd.github+json'}}
+function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\s/g,''))))}
+function ghGet(c,p){return fetch(api(c,p)+'?ref='+encodeURIComponent(c.b)+'&t='+Date.now(),{headers:hd(c)}).then(function(r){
+  if(r.status===404)return{missing:true};
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json().then(function(j){return{data:JSON.parse(b64d(j.content)),sha:j.sha}})})}
+function ghPut(c,p,obj,sha,msg){var body={message:msg,content:b64e(JSON.stringify(obj,null,2)+'\n'),branch:c.b};if(sha)body.sha=sha;
+  return fetch(api(c,p),{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},hd(c)),body:JSON.stringify(body)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return j.content.sha})})}
+function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+$('#d').value=today();
+/* 公開する対象(タブごと) */
+var PUBLISH={
+  news:{name:'お知らせ',put:function(c){return ghPut(c,c.p,{news:S.items},S.sha,'update news').then(function(s){S.sha=s;mark('news',false)})}},
+  bio:{name:'BIO',put:function(c){return ghPut(c,'bio.json',S.bio,S.bioSha,'update bio').then(function(s){S.bioSha=s;mark('bio',false)})}},
+  texts:{name:'文言',put:function(c){return ghPut(c,'texts.json',S.texts,S.txtSha,'update texts').then(function(s){S.txtSha=s;mark('texts',false)})}}
+};
+['videos','stats','cast','channels','faq','site'].forEach(function(k){PUBLISH[k]={name:'サイトの内容',put:function(c){return ghPut(c,'content.json',S.content,S.conSha,'update content').then(function(s){S.conSha=s;mark('content',false)})}}});
+/* タブ */
+function go(t){CUR=t;[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.classList.toggle('on',b.dataset.t===t)});[].forEach.call(document.querySelectorAll('.pg'),function(p){p.classList.toggle('on',p.id==='p-'+t)});
+  $('#pub').style.display=PUBLISH[t]?'':'none';$('#dl').style.display=t==='news'?'':'none';scrollTo(0,0);
+  if(t==='texts'&&!S.tlist)loadTexts()}
+[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.addEventListener('click',function(){go(b.dataset.t)})});
+/* ===== 記事 ===== */
+function render(){
+  var l=S.items.map(function(n,i){return{n:n,i:i}}).sort(function(a,b){return String(b.n.date).localeCompare(String(a.n.date))});
+  $('#list').innerHTML=l.length?l.map(function(x){return'<div class="row"><small>'+esc(String(x.n.date).replace(/-/g,'.'))+'</small><div><span class="tg">'+esc(x.n.tag||'NEWS')+'</span>'+esc(x.n.title)+(x.n.titleEn?' <span class="mu">/ EN</span>':'')+(x.n.image?' <span class="mu">/ 写真あり</span>':'')+'</div><div><button class="b o s" data-o="'+x.i+'">記事を開く</button><button class="b o s" data-e="'+x.i+'">編集</button><button class="b o s" data-x="'+x.i+'">削除</button></div></div>'}).join(''):'<p class="mu">記事はまだありません。上のフォームから追加できます。</p>'}
+function siteUrl(){var c=cfg();if(!c.u||!c.r)return'';return c.r.toLowerCase()===(c.u+'.github.io').toLowerCase()?'https://'+c.u+'.github.io/':'https://'+c.u+'.github.io/'+c.r+'/'}
+function preview(){var t=$('#ti').value.trim();$('#pv').innerHTML=t?'<span class="d">'+esc($('#d').value.replace(/-/g,'.'))+'</span><span class="tg">'+esc($('#g').value)+'</span><b>'+esc(t)+'</b>'+(IMG?'<div class="mu" style="margin-top:6px">写真: あり</div>':'')+'<p>'+esc($('#bo').value)+'</p>'+($('#te').value.trim()?'<p style="border-top:1px dashed #ccc;padding-top:8px"><b>EN:</b> '+esc($('#te').value.trim())+'</p>':''):'<span class="mu">ここに、サイトでの見え方が出ます</span>'}
+['d','g','ti','te','bo','bo2'].forEach(function(k){$('#'+k).addEventListener('input',preview)});
+function showImg(src){$('#ipv').innerHTML=src?'<img class="th" src="'+esc(src)+'"><button class="b o s" id="rmim" style="margin:0">写真を外す</button>':''}
+function shrink(file){return new Promise(function(res,rej){var im=new Image(),u=URL.createObjectURL(file);im.onload=function(){var m=1400,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(function(b){b?res(b):rej(new Error('変換できませんでした'))},'image/jpeg',.85)};im.onerror=function(){rej(new Error('画像を読み込めませんでした'))};im.src=u})}
+function blob64(b){return new Promise(function(res){var r=new FileReader();r.onload=function(){res(String(r.result).split(',')[1])};r.readAsDataURL(b)})}
+function putRaw(c,p,b64,msg){return fetch(api(c,p),{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},hd(c)),body:JSON.stringify({message:msg,content:b64,branch:c.b})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return p})})}
+function uploadImg(file){var c=cfg();if(!need(c))return Promise.reject(new Error('接続してください'));say('写真をアップロードしています…');return shrink(file).then(blob64).then(function(b){return putRaw(c,'images/'+Date.now()+'.jpg',b,'add image')})}
+$('#im').addEventListener('change',function(){var f=this.files[0];if(!f)return;uploadImg(f).then(function(p){IMG=p;showImg(URL.createObjectURL(f));say('写真をアップロードしました','ok');preview()}).catch(function(e){say('写真のアップロードに失敗しました: '+e.message,'ng')})});
+$('#ipv').addEventListener('click',function(e){if(e.target.id==='rmim'){IMG='';showImg('');$('#im').value='';preview()}});
+$('#list').addEventListener('click',function(e){var t=e.target;
+  if(t.dataset.o!=null){var u=siteUrl();if(!u){say('先にユーザー名とリポジトリ名を入れてください','ng');return}window.open(u+'#news/'+encodeURIComponent(S.items[+t.dataset.o].id),'_blank')}
+  if(t.dataset.e!=null){var n=S.items[+t.dataset.e];S.edit=+t.dataset.e;$('#d').value=n.date;$('#g').value=n.tag||'NEWS';$('#ti').value=n.title||'';$('#te').value=n.titleEn||'';$('#bo').value=n.body||'';$('#bo2').value=n.bodyEn||'';IMG=n.image||'';showImg(IMG);$('#add').textContent='更新する';$('#cancel').style.display='inline-block';preview();scrollTo({top:0,behavior:'smooth'})}
+  if(t.dataset.x!=null&&confirm('この記事を削除しますか?(「公開する」を押すまで、サイトは変わりません)')){S.items.splice(+t.dataset.x,1);render();mark('news',true);say('削除しました。「公開する」を押すとサイトに反映されます')}});
+function reset(){S.edit=-1;IMG='';['ti','te','bo','bo2'].forEach(function(k){$('#'+k).value=''});$('#im').value='';showImg('');$('#d').value=today();$('#add').textContent='追加する';$('#cancel').style.display='none';preview()}
+$('#cancel').addEventListener('click',reset);
+$('#add').addEventListener('click',function(){
+  var n={id:S.edit>=0&&S.items[S.edit].id?S.items[S.edit].id:String(Date.now()),date:$('#d').value,tag:$('#g').value,title:$('#ti').value.trim(),titleEn:$('#te').value.trim(),body:$('#bo').value.trim(),bodyEn:$('#bo2').value.trim()};
+  if(IMG)n.image=IMG;
+  if(!n.title||!n.date){say('日付とタイトルを入れてください','ng');return}
+  if(S.edit>=0)S.items[S.edit]=n;else S.items.push(n);
+  reset();render();mark('news',true);say('追加しました。画面下の「公開する」を押すと、サイトに反映されます','ok')});
+/* ===== 一覧エディタ(動画・キャスト・チャンネル・FAQ) ===== */
+var SCH={
+ videos:{blank:{id:'',title:'',titleEn:'',dur:'',views:'',sum:'',sumEn:'',thumb:''},head:'title',f:[['id','YouTube動画ID(動画のURLの「v=」のあと。例: 7nsuiov40fk)','t'],['title','タイトル(日本語)','t'],['titleEn','タイトル(英語・なくてもOK)','t'],['dur','再生時間(例: 8:11)','t'],['views','再生回数(例: 2,154)','t'],['sum','あらすじ(日本語)','a'],['sumEn','あらすじ(英語・なくてもOK)','a'],['thumb','サムネイル(空ならYouTubeの画像を自動で使います)','i']]},
+ cast:{blank:{name:'',nameEn:'',tag:'',ini:'',photo:''},head:'name',f:[['name','名前(日本語)','t'],['nameEn','名前(英語)','t'],['tag','英字の表記(例: ATABOU)','t'],['ini','写真がないときに出す文字(1文字)','t'],['photo','写真','i']]},
+ channels:{blank:{key:'',name:'',nameEn:'',handle:'',url:'',desc:'',descEn:'',stats:'',statsEn:''},head:'name',f:[['key','見出し(例: CHANNEL 01)','t'],['name','名前(日本語)','t'],['nameEn','名前(英語)','t'],['handle','表示するアドレス(例: youtube.com/@xxx)','t'],['url','リンク先のURL','t'],['desc','説明(日本語)','a'],['descEn','説明(英語・なくてもOK)','a'],['stats','数字などの一行(例: 登録者 30人 ・ 動画 5本)','t'],['statsEn','数字などの一行(英語)','t']]},
+ faq:{blank:{q:'',qEn:'',a:'',aEn:''},head:'q',f:[['q','質問(日本語)','t'],['qEn','質問(英語・なくてもOK)','t'],['a','答え(日本語)','a'],['aEn','答え(英語・なくてもOK)','a']]}
+};
+function imgSrc(v,it,sec){if(!v||v==='@default1')return'';return v}
+function secRender(sec){
+  var s=SCH[sec],arr=S.content[sec]||[];
+  $('#l-'+sec).innerHTML=arr.map(function(it,i){
+    var h='<div class="bx2"><div class="ih"><b>'+(i+1)+'. '+esc(it[s.head]||'(新しい項目)')+'</b><span><button class="b o s" data-up="'+sec+':'+i+'">↑</button><button class="b o s" data-dn="'+sec+':'+i+'">↓</button><button class="b o s" data-del="'+sec+':'+i+'">削除</button></span></div>';
+    s.f.forEach(function(f){var k=f[0],v=it[k]==null?'':it[k],a='data-s="'+sec+'" data-i="'+i+'" data-k="'+k+'"';
+      h+='<label>'+f[1]+'</label>';
+      if(f[2]==='t')h+='<input '+a+' value="'+esc(v)+'">';
+      else if(f[2]==='a')h+='<textarea '+a+'>'+esc(v)+'</textarea>';
+      else{var src=imgSrc(v);if(!src&&sec==='videos'&&it.id)src='https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/hqdefault.jpg';
+        h+=(v==='@default1'?'<p class="mu">(初期の写真が使われています)</p>':'')+(src?'<img class="th" src="'+esc(src)+'" alt="">':'')+'<input type="file" accept="image/*" '+a+'>'+(v?'<button class="b o s" data-rmi="'+sec+':'+i+':'+k+'" style="margin:6px 0 0">写真を外す</button>':'')}});
+    return h+'</div>'}).join('')||'<p class="mu">まだありません。</p>'}
+function secs(){Object.keys(SCH).forEach(secRender)}
+function statsRender(){var s=S.content.stats||{};[].forEach.call(document.querySelectorAll('[data-stat]'),function(i){i.value=s[i.dataset.stat]==null?'':s[i.dataset.stat]});}
+function siteRender(){var c=S.content;$('#hero-pv').innerHTML=c.heroImage?'<img class="th" src="'+esc(c.heroImage)+'" alt="">':'<p class="mu">(初期の写真)</p>';[].forEach.call(document.querySelectorAll('[data-lnk]'),function(i){i.value=(c.links||{})[i.dataset.lnk]||''})}
+var main=$('#main');
+main.addEventListener('input',function(e){var t=e.target,d=t.dataset;
+  if(d.s&&t.type!=='file'){S.content[d.s][+d.i][d.k]=t.value;mark('content',true)}
+  if(d.stat){S.content.stats=S.content.stats||{};S.content.stats[d.stat]=d.stat==='asof'?t.value:(t.value===''?'':+t.value);mark('content',true)}
+  if(d.lnk){S.content.links=S.content.links||{};S.content.links[d.lnk]=t.value;mark('content',true)}
+  if(d.bi!=null){S.bio.intro[+d.bi][d.k]=t.value;mark('bio',true)}
+  if(d.ti!=null){S.bio.timeline[+d.ti][d.k]=t.value;mark('bio',true)}
+  if(d.tk!=null){setText(d.tk,d.l,t.value)}});
+main.addEventListener('change',function(e){var t=e.target,d=t.dataset;if(t.type!=='file'||!t.files[0])return;
+  if(d.s){uploadImg(t.files[0]).then(function(p){S.content[d.s][+d.i][d.k]=p;mark('content',true);secRender(d.s);say('写真をアップロードしました。「公開する」で反映されます','ok')}).catch(function(er){say('写真のアップロードに失敗しました: '+er.message,'ng')})}
+  if(t.id==='hero-f'){uploadImg(t.files[0]).then(function(p){S.content.heroImage=p;mark('content',true);siteRender();say('写真をアップロードしました。「公開する」で反映されます','ok')}).catch(function(er){say('写真のアップロードに失敗しました: '+er.message,'ng')})}});
+main.addEventListener('click',function(e){var t=e.target,d=t.dataset,p,a;
+  function mv(sec,i,j){var r=S.content[sec];if(j<0||j>=r.length)return;var x=r[i];r[i]=r[j];r[j]=x;secRender(sec);mark('content',true)}
+  if(d.add){S.content[d.add]=S.content[d.add]||[];S.content[d.add].push(clone(SCH[d.add].blank));secRender(d.add);mark('content',true);return}
+  if(d.up){p=d.up.split(':');mv(p[0],+p[1],+p[1]-1)}
+  if(d.dn){p=d.dn.split(':');mv(p[0],+p[1],+p[1]+1)}
+  if(d.del){p=d.del.split(':');if(confirm('この項目を削除しますか?(「公開する」を押すまで、サイトは変わりません)')){S.content[p[0]].splice(+p[1],1);secRender(p[0]);mark('content',true)}}
+  if(d.rmi){p=d.rmi.split(':');S.content[p[0]][+p[1]][p[2]]='';secRender(p[0]);mark('content',true)}
+  if(t.id==='hero-rm'){S.content.heroImage='';siteRender();mark('content',true)}
+  if(t.id==='stat-today'){S.content.stats.asof=today();statsRender();mark('content',true)}
+  /* BIO */
+  var tl=S.bio.timeline,i;
+  if(d.bd!=null&&confirm('この段落を削除しますか?')){S.bio.intro.splice(+d.bd,1);bioRender();mark('bio',true)}
+  if(d.tx!=null){tl.splice(+d.tx,1);bioRender();mark('bio',true)}
+  if(d.tu!=null){i=+d.tu;if(i>0){a=tl[i];tl[i]=tl[i-1];tl[i-1]=a;bioRender();mark('bio',true)}}
+  if(d.td!=null){i=+d.td;if(i<tl.length-1){a=tl[i];tl[i]=tl[i+1];tl[i+1]=a;bioRender();mark('bio',true)}}
+  if(d.tr!=null){delete S.texts[d.tr];textsRender();mark('texts',true)}});
+/* ===== BIO ===== */
+function bioRender(){
+  $('#bi-list').innerHTML=S.bio.intro.map(function(p,i){return'<div class="bx2"><label>段落 '+(i+1)+'(日本語)</label><textarea data-bi="'+i+'" data-k="ja">'+esc(p.ja)+'</textarea><label>英語(なくてもOK)</label><textarea data-bi="'+i+'" data-k="en">'+esc(p.en||'')+'</textarea><button class="b o s" data-bd="'+i+'" style="margin:8px 0 0">この段落を削除</button></div>'}).join('');
+  $('#tl-list').innerHTML=S.bio.timeline.map(function(r,i){return'<div class="bx2"><label>見出し(例: 2015.11.23 / AGE 6)</label><input data-ti="'+i+'" data-k="label" value="'+esc(r.label)+'"><label>内容(日本語)</label><input data-ti="'+i+'" data-k="ja" value="'+esc(r.ja)+'"><label>内容(英語・なくてもOK)</label><input data-ti="'+i+'" data-k="en" value="'+esc(r.en||'')+'"><div><button class="b o s" data-tu="'+i+'" style="margin:8px 6px 0 0">↑ 上へ</button><button class="b o s" data-td="'+i+'" style="margin:8px 6px 0 0">↓ 下へ</button><button class="b o s" data-tx="'+i+'" style="margin:8px 0 0">削除</button></div></div>'}).join('')}
+$('#bi-add').addEventListener('click',function(){S.bio.intro.push({ja:'',en:''});bioRender();mark('bio',true)});
+$('#tl-add').addEventListener('click',function(){S.bio.timeline.push({label:'',ja:'',en:''});bioRender();mark('bio',true)});
+/* ===== 文言 ===== */
+var EXC='#nl,#vg,#bi,#btl,#art,#cs,#chs,#fqw,#dots,#in,#nt,#tkd,#tkt,#sv,#sw,.num,.cnt,.lang,script,style,canvas';
+function loadTexts(){
+  fetch('index.html?t='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text()}).then(function(h){
+    var d=new DOMParser().parseFromString(h,'text/html'),w=d.createTreeWalker(d.body,NodeFilter.SHOW_TEXT),n,seen={},out=[];
+    while((n=w.nextNode())){var k=n.nodeValue.trim();if(!k||/^[\d\s.,]+$/.test(k))continue;var p=n.parentNode;if(p.closest&&p.closest(EXC))continue;if(!seen[k]){seen[k]=1;out.push(k)}}
+    S.tlist=out;textsRender()}).catch(function(e){$('#tx-list').innerHTML='<p class="mu">サイトを読み込めませんでした('+esc(e.message)+')。この管理ページが、サイトと同じ場所(index.htmlの隣)にあるか確認してください。</p>'})}
+function textsRender(){
+  var q=($('#tq').value||'').trim().toLowerCase(),l=S.tlist||[];
+  $('#tx-list').innerHTML=l.filter(function(k){var o=S.texts[k]||{};return!q||(k+(o.ja||'')+(o.en||'')+(EN0[k]||'')).toLowerCase().indexOf(q)>=0}).map(function(k){var o=S.texts[k]||{};
+    return'<div class="bx2"><div class="mu" style="word-break:break-all">元の文: '+esc(k.length>70?k.slice(0,70)+'…':k)+'</div><label>日本語(いまの表示)</label><textarea style="min-height:60px" data-tk="'+esc(k)+'" data-l="ja">'+esc(o.ja||k)+'</textarea><label>英語</label><textarea style="min-height:60px" data-tk="'+esc(k)+'" data-l="en">'+esc(o.en||EN0[k]||'')+'</textarea><button class="b o s" data-tr="'+esc(k)+'" style="margin:8px 0 0">元に戻す</button></div>'}).join('')||'<p class="mu">見つかりませんでした。</p>'}
+function setText(k,l,v){var o=S.texts[k]=S.texts[k]||{};if(l==='ja'){if(v===k||v==='')delete o.ja;else o.ja=v}else{if(v===(EN0[k]||'')||v==='')delete o.en;else o.en=v}if(!o.ja&&!o.en)delete S.texts[k];mark('texts',true)}
+$('#tq').addEventListener('input',textsRender);
+/* ===== 接続 ===== */
+function loadAll(c){say('接続しています…');
+  return Promise.all([ghGet(c,c.p),ghGet(c,'content.json'),ghGet(c,'texts.json'),ghGet(c,'bio.json')]).then(function(rs){
+    var n=rs[0];S.items=n.missing?[]:(Array.isArray(n.data)?n.data:(n.data.news||[]));S.sha=n.missing?null:n.sha;
+    var y=rs[1];S.conSha=y.missing?null:y.sha;S.content=clone(CDEF);if(!y.missing&&y.data&&typeof y.data==='object')Object.keys(y.data).forEach(function(k){S.content[k]=y.data[k]});
+    var x=rs[2];S.txtSha=x.missing?null:x.sha;S.texts=(!x.missing&&x.data&&typeof x.data==='object')?x.data:{};
+    var bj=rs[3];S.bioSha=bj.missing?null:bj.sha;S.bio=clone(BIODEF);if(!bj.missing&&bj.data&&Array.isArray(bj.data.intro)&&Array.isArray(bj.data.timeline))S.bio=bj.data;
+    S.dirty={};S.ok=true;badge();render();secs();statsRender();siteRender();bioRender();if(S.tlist)textsRender();
+    say('接続OK。読み込みました(お知らせ '+S.items.length+' 件)','ok');go('news')})}
+$('#test').addEventListener('click',function(){var c=cfg();if(!need(c))return;lsSet(c);loadAll(c).catch(function(e){S.ok=false;badge();say('接続できませんでした: '+e.message+'(「① 使い方」の「困ったとき」を見てください)','ng')})});
+$('#clr').addEventListener('click',function(){try{localStorage.removeItem('ap_admin')}catch(e){}['u','r','t'].forEach(function(k){$('#'+k).value=''});S.ok=false;badge();say('設定を消去しました')});
+$('#pub').addEventListener('click',function(){var c=cfg();if(!need(c))return;var f=PUBLISH[CUR];if(!f){say('この画面には、公開するものがありません','ng');return}
+  var bt=$('#pub');bt.disabled=true;say('公開しています…');
+  f.put(c).then(function(){say('公開しました('+f.name+')。1〜3分でサイトに反映されます','ok')}).catch(function(e){say('公開できませんでした: '+(e&&e.message||e),'ng')}).then(function(){bt.disabled=false})});
+$('#dl').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({news:S.items},null,2)+'\n'],{type:'application/json'}));a.download='news.json';a.click()});
+$('#site').addEventListener('click',function(){var u=siteUrl();if(!u){say('先にユーザー名とリポジトリ名を入れてください','ng');return}window.open(u,'_blank')});
+addEventListener('beforeunload',function(e){if(anyDirty()){e.preventDefault();e.returnValue=''}});
+render();preview();secs();statsRender();siteRender();bioRender();badge();go('guide');
+if(c0.u&&c0.r&&c0.t){loadAll(cfg()).catch(function(){go('set');say('自動接続できませんでした。鍵や名前を確認して「接続テスト」を押してください','ng')})}
+})();
+</script>
+</body>
+</html>
